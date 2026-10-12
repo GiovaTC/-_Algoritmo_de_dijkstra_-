@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DijkstraOracle19c")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7072783a82d952a6c2179bf49efb81ea6e51779e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bd08df9e131c01e8fcb66d80153062a30c406a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("DijkstraOracle19c")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DijkstraOracle19c")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
