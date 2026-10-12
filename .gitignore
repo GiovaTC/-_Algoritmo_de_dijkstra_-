@@ -1,0 +1,118 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+!**/[Pp]ackages/repositories.config
+
+# NuGet cache
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Core
+wwwroot/lib/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.orig
+
+# Operating System
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Windows
+$RECYCLE.BIN/
+*.lnk
+
+# Test results
+TestResults/
+*.trx
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Entity Framework
+*.dbmdl
+*.jfm
+
+# SQL Server LocalDB
+*.mdf
+*.ldf
+*.ndf
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# User secrets
+secrets.json
+appsettings.*.json
+!appsettings.json
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Publish
+publish/
+PublishProfiles/
+
+# Azure
+.azure/
+*.publishsettings
+
+# Docker
+docker-compose.override.yml
+
+# Node.js
+node_modules/
+
+# Front-end generated files
+dist/
+build/
+
+# ==========================================
+# Development certificates
+# ==========================================
+
+*.pfx
+*.p12
+
+# ==========================================
+# Backup files
+# ==========================================
+
+*.orig
+*.rej
+*~
