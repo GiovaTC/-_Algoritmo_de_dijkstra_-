@@ -39,7 +39,114 @@ namespace DijkstraOracle19c
             Console.WriteLine("==================================");
             Console.WriteLine(" ALGORITMO DE DIJKSTRA");
             Console.WriteLine(" C# + ORACLE DATABASE 19c");
-            Console.WriteLine("==================================");    
+            Console.WriteLine("==================================");
+
+            try
+            {
+                using var conexion =
+                    new OracleConnection(ConnectionString);
+                conexion.Open();
+
+                Console.WriteLine(
+                    "\nConexion a oracle 19c exitosa.");
+
+                Dictionary<string, string> nodos = CargarNodos(conexion);
+
+                if (nodos.Count == 0)
+                {
+                    Console.WriteLine(
+                        "No hay nodos registrados en la tabla NODOS.");
+                    return;
+                }
+
+                Dictionary<string, List<Arista>> grafo = CargarGrafo(conexion, nodos.Keys);
+
+                Console.WriteLine("\nNodos disponibles:");
+
+                foreach (var nodo in nodos)
+                {
+                    Console.WriteLine(
+                        $"{nodo.Key} - {nodo.Value}");
+                }
+
+                Console.Write("\nIngrese el nodo de origen: ");
+                string origen = LeerNodo();
+
+                Console.Write("Ingrese el nodo de destino: ");
+                string destino = LeerNodo();
+
+                if (!nodos.ContainsKey(origen) || !nodos.ContainsKey(destino))
+                {
+                    Console.WriteLine(
+                        "\nError: el origen o destino no existe!");
+                    return;
+                }
+
+                ResultadoRuta resultado =
+                    CalcularDijkstra(grafo, origen, destino);
+
+                Console.WriteLine("\n========== RESULTADO ==========");
+
+                if (resultado.Encontrada)
+                {
+                    Console.WriteLine(
+                        $"Ruta mas corta: " +
+                        string.Join(" -> ", resultado.Ruta));
+
+                    Console.WriteLine(
+                        $"Distancia total: {resultado.Distancia}");
+                }
+                else
+                {
+                    Console.WriteLine(
+                        "No existe una ruta entre los nodos.");
+                }
+
+                GuardarHistorial(conexion, origen, destino, resultado);
+
+                Console.WriteLine(
+                "Consulta registrada en HISTORIAL_RUTAS.");
+
+                Console.WriteLine("===============================");
+            }
+            catch (OracleException ex)
+            {
+                Console.WriteLine(
+                    "\nError de oracle: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(
+                    "\nError: " + ex.Message);
+            }
+
+            Console.WriteLine("\nPresione una tecla para salir.");
+            Console.ReadKey();
         }
+
+        private static ResultadoRuta CalcularDijkstra(Dictionary<string, List<Arista>> grafo, string origen, string destino)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void GuardarHistorial(OracleConnection conexion, string origen, string destino, ResultadoRuta resultado)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static string LeerNodo()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static Dictionary<string, List<Arista>> CargarGrafo(OracleConnection conexion, Dictionary<string, string>.KeyCollection keys)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static Dictionary<string, string> CargarNodos(OracleConnection conexion)
+        {
+            throw new NotImplementedException();
+        }   
     }
 }
