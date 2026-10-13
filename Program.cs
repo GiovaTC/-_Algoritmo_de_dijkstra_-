@@ -129,6 +129,28 @@ namespace DijkstraOracle19c
             return  (Console.ReadLine() ?? "")
                 .Trim()
                 .ToUpperInvariant();
+        }
+
+        // CONSULTA los nodos almacenados en Oracle .
+        private static Dictionary<string, string> CargarNodos(OracleConnection conexion)
+        {
+            var nodos = new Dictionary<string, string>(
+                StringComparer.OrdinalIgnoreCase);  
+
+            const string sql = "SELECT ID,NODO, NOMBRE FROM NODOS";
+
+            using var comando = new OracleCommand(sql, conexion);
+
+            using var lector = comando.ExecuteReader();
+
+            while (lector.Read())
+            {
+                string id = lector.GetString(0);
+                string nombre = lector.GetString(2);
+                nodos[id] = nombre;
+            }
+
+            return nodos;
         }   
 
         private static ResultadoRuta CalcularDijkstra(Dictionary<string, List<Arista>> grafo, string origen, string destino)
@@ -145,10 +167,6 @@ namespace DijkstraOracle19c
         {
             throw new NotImplementedException();
         }
-
-        private static Dictionary<string, string> CargarNodos(OracleConnection conexion)
-        {
-            throw new NotImplementedException();
-        }   
+ 
     }
 }
