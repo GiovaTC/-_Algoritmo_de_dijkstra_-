@@ -196,9 +196,101 @@ namespace DijkstraOracle19c
             return grafo;
         }
 
-        private static ResultadoRuta CalcularDijkstra(Dictionary<string, List<Arista>> grafo, string origen, string destino)
+        // IMPLEMENTACIO DEL ALGORITMO DE DIJKSTRA .
+        private static ResultadoRuta CalcularDijkstra(
+            Dictionary<string, List<Arista>> grafo, 
+            string origen, 
+            string destino)
         {
-            throw new NotImplementedException();
+            var distancias = new Dictionary<string, decimal>(
+                StringComparer.OrdinalIgnoreCase);
+
+            var anteriores = new Dictionary<string, string>(
+                StringComparer.OrdinalIgnoreCase);
+
+            foreach (string nodo in grafo.Keys)
+            {
+                distancias[nodo] = decimal.MaxValue;
+            }
+
+            distancias[origen] = 0m;
+
+            var pendientes =
+                new PriorityQueue<string, decimal>();
+
+            pendientes.Enqueue(origen, 0m);
+
+            while (pendientes.Count > 0)
+            {
+                pendientes.TryDequeue(
+                    out string? actual,
+                    out decimal distanciaActual);
+
+                if (actual is null)
+                    continue;
+
+                // IGNORA entradas antiguas de la cola de prioridad .
+                if (distanciaActual != distancias[actual])
+                    continue;
+
+                if (actual == destino)
+                    break;
+
+                foreach (Arista arista in grafo[actual])
+                {
+                    // EVITA desbordamientos decimales.
+                    if (distancias[actual] > decimal.MaxValue - arista.Peso)
+                    {
+                        continue;
+                    }
+
+                    decimal nuevaDistancia = distancias[actual] + arista.Peso;
+
+                    if (nuevaDistancia < distancias[arista.Destino])
+                    {
+                        distancias[arista.Destino] = nuevaDistancia;
+                        anteriores[arista.Destino] = actual;
+                        pendientes.Enqueue(arista.Destino, nuevaDistancia);
+                    }
+                }
+            }
+
+            if (distancias[destino] == decimal.MaxValue)
+            {
+                return new ResultadoRuta
+                {
+                    Encontrada = false
+                };
+            }
+
+            var ruta = new List<string>();
+            string nodoActual = destino;    
+
+            ruta.Add(nodoActual);
+
+            while (nodoActual != origen)
+            {
+                if (!anteriores.TryGetValue(
+                    nodoActual, out string? anterior))
+                {
+                    return new ResultadoRuta
+                    {
+                        Encontrada = false
+                    };
+                }
+
+                nodoActual = anterior;
+                ruta.Add(nodoActual);
+            }
+
+            ruta.Reverse();
+
+            return new ResultadoRuta
+            {
+                Encontrada = true,
+                Distancia = distancias[destino],
+                Ruta = ruta
+            };
         }
 
         private static void GuardarHistorial(OracleConnection conexion, string origen, string destino, ResultadoRuta resultado)
