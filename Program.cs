@@ -151,7 +151,50 @@ namespace DijkstraOracle19c
             }
 
             return nodos;
-        }   
+        }
+
+        // CARGA las aristas y crea un grafo bidireccional .
+        private static Dictionary<string, List<Arista>> 
+            CargarGrafo(
+            OracleConnection conexion,
+            IEnumerable<string> idsNodos)
+        {
+            var grafo = new Dictionary<string, List<Arista>>(
+                StringComparer.OrdinalIgnoreCase);
+
+            foreach (string id in idsNodos)
+            {
+                grafo[id] = new List<Arista>();
+            }
+
+            const string sql =
+                @"SELECT NODO_ORIGEN, NODO_DESTINO, PESO 
+                FROM ARISTAS";
+
+            using var comando = 
+                new OracleCommand(sql, conexion);
+
+            using var lector = comando.ExecuteReader();
+            
+            while (lector.Read())
+            {
+                string origen = lector.GetString(0);
+                string destino = lector.GetString(1);
+                decimal peso = lector.GetDecimal(2);
+
+                if (peso < 0)
+                {
+                    throw new InvalidOperationException(
+                        "Dijkstra no admite pesos negativos. ");
+                }
+
+                grafo[origen].Add(new Arista(destino, peso));
+
+                grafo[destino].Add(new Arista(origen, peso));
+            }
+
+            return grafo;
+        }
 
         private static ResultadoRuta CalcularDijkstra(Dictionary<string, List<Arista>> grafo, string origen, string destino)
         {
@@ -159,11 +202,6 @@ namespace DijkstraOracle19c
         }
 
         private static void GuardarHistorial(OracleConnection conexion, string origen, string destino, ResultadoRuta resultado)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static Dictionary<string, List<Arista>> CargarGrafo(OracleConnection conexion, Dictionary<string, string>.KeyCollection keys)
         {
             throw new NotImplementedException();
         }
