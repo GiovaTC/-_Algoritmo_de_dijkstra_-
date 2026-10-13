@@ -124,17 +124,19 @@ namespace DijkstraOracle19c
             Console.ReadKey();
         }
 
+        private static string LeerNodo()
+        {
+            return  (Console.ReadLine() ?? "")
+                .Trim()
+                .ToUpperInvariant();
+        }   
+
         private static ResultadoRuta CalcularDijkstra(Dictionary<string, List<Arista>> grafo, string origen, string destino)
         {
             throw new NotImplementedException();
         }
 
         private static void GuardarHistorial(OracleConnection conexion, string origen, string destino, ResultadoRuta resultado)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static string LeerNodo()
         {
             throw new NotImplementedException();
         }
