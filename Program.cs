@@ -295,7 +295,10 @@ namespace DijkstraOracle19c
         }
 
         // GUARDA tanto las rutas encontradas como LAS NO encontradas!
-        private static void GuardarHistorial(OracleConnection conexion, string origen, string destino, ResultadoRuta resultado)
+        private static void GuardarHistorial(OracleConnection conexion, 
+            string origen, 
+            string destino, 
+            ResultadoRuta resultado)
         {
             const string sql = @"
                 INSERT INTO HISTORIAL_RUTAS
@@ -331,7 +334,7 @@ namespace DijkstraOracle19c
                     string.Join(" -> ", resultado.Ruta) : DBNull.Value;
 
             comando.Parameters.Add(
-                "distancia", OracleDbType.Decimal).Value =
+                "distancia", OracleDbType.Char).Value =
                     resultado.Encontrada ? "S" : "N";
 
             comando.ExecuteNonQuery();
