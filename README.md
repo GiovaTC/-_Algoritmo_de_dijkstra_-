@@ -3,6 +3,7 @@
 
 <img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/51b9a7e1-d13f-4627-a0b1-7f358853bafd" />  
 
+<img width="2551" height="1079" alt="image" src="https://github.com/user-attachments/assets/3a1a9f50-cb69-460d-a741-a5c2cd4c2ac3" />    
 ```
 
 Proyecto de consola en C# que implementa el algoritmo de Dijkstra para encontrar la ruta de menor costo entre dos nodos de un grafo. Los nodos, las conexiones y el historial de rutas se almacenan en Oracle Database 19c.
