@@ -146,7 +146,8 @@ namespace DijkstraOracle19c
             while (lector.Read())
             {
                 string id = lector.GetString(0);
-                string nombre = lector.GetString(2);
+                string nombre = lector.GetString(1);
+
                 nodos[id] = nombre;
             }
 
