@@ -334,10 +334,15 @@ namespace DijkstraOracle19c
                     string.Join(" -> ", resultado.Ruta) : DBNull.Value;
 
             comando.Parameters.Add(
-                "distancia", OracleDbType.Char).Value =
+                "distancia", OracleDbType.Decimal).Value =
+                resultado.Encontrada ? resultado.Distancia : DBNull.Value;
+
+
+            comando.Parameters.Add(
+                "encontrada", OracleDbType.Char).Value =
                     resultado.Encontrada ? "S" : "N";
 
             comando.ExecuteNonQuery();
-        }   
+        }      
     }
 }
