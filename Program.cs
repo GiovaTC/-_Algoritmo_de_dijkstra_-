@@ -137,7 +137,7 @@ namespace DijkstraOracle19c
             var nodos = new Dictionary<string, string>(
                 StringComparer.OrdinalIgnoreCase);  
 
-            const string sql = "SELECT ID,NODO, NOMBRE FROM NODOS";
+            const string sql = "SELECT ID_NODO, NOMBRE FROM NODOS";
 
             using var comando = new OracleCommand(sql, conexion);
 
