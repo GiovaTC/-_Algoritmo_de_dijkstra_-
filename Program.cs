@@ -196,7 +196,7 @@ namespace DijkstraOracle19c
             return grafo;
         }
 
-        // IMPLEMENTACIO DEL ALGORITMO DE DIJKSTRA .
+        // IMPLEMENTACION DEL ALGORITMO DE DIJKSTRA .
         private static ResultadoRuta CalcularDijkstra(
             Dictionary<string, List<Arista>> grafo, 
             string origen, 
@@ -293,10 +293,47 @@ namespace DijkstraOracle19c
             };
         }
 
+        // GUARDA tanto las rutas encontradas como LAS NO encontradas!
         private static void GuardarHistorial(OracleConnection conexion, string origen, string destino, ResultadoRuta resultado)
         {
-            throw new NotImplementedException();
-        }
- 
+            const string sql = @"
+                INSERT INTO HISTORIAL_RUTAS
+                (
+                    NODO_ORIGEN, 
+                    NODO_DESTINO, 
+                    RUTA, 
+                    DISTANCIA,
+                    ENCONTRADA
+                )
+                VALUES 
+                (
+                    :origen, 
+                    :destino, 
+                    :ruta, 
+                    :distancia,
+                    :encontrada
+                )"; 
+
+            using var comando = new OracleCommand(sql, conexion);
+
+            comando.BindByName = true;
+
+            comando.Parameters.Add(
+                "origen", OracleDbType.Varchar2).Value = origen;
+
+            comando.Parameters.Add(
+                "destino", OracleDbType.Varchar2).Value = destino;
+
+            comando.Parameters.Add(
+                "ruta", OracleDbType.Varchar2).Value =
+                    resultado.Encontrada ?
+                    string.Join(" -> ", resultado.Ruta) : DBNull.Value;
+
+            comando.Parameters.Add(
+                "distancia", OracleDbType.Decimal).Value =
+                    resultado.Encontrada ? "S" : "N";
+
+            comando.ExecuteNonQuery();
+        }   
     }
 }
